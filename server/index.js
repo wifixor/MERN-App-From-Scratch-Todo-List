@@ -24,6 +24,7 @@ const typeDefs = `
   type Mutation {
     createTodo(text: String!): Todo
     updateTodo(id: ID!, text: String!, complete: Boolean!): String
+    removeTodo(id: ID!): Boolean
   }
 `
 
@@ -41,6 +42,10 @@ const resolvers = {
     updateTodo: async (_, { id, text, complete }) => {     
       await Todo.findByIdAndUpdate(id, { complete, text });     
       return "Malumot o'zgardi!";
+    },
+    removeTodo: async (_, { id }) => {
+      await Todo.findByIdAndRemove(id)
+      return true
     }
   }
 }
